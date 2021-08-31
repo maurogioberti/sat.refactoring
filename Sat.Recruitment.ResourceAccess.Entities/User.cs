@@ -10,5 +10,12 @@ namespace Sat.Recruitment.ResourceAccess.Entities
         public string Phone { get; set; }
         public string UserType { get; set; }
         public decimal Money { get; set; }
+
+        //TODO: Validations must be placed better in a resource file
+        public static class Validations
+        {
+            public static readonly string UserCreated = "User Created";
+            public static readonly string UserDuplicated = "The user is duplicated";
+        }
     }
 }
