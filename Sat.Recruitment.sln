@@ -7,13 +7,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Api", "Sat.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Test", "Sat.Recruitment.Test\Sat.Recruitment.Test.csproj", "{42E696E9-2672-4B91-AD96-353A69F7219C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Business.Logic.Abstractions", "Sat.Recruitment.Business.Logic.Abstractions\Sat.Recruitment.Business.Logic.Abstractions.csproj", "{C264995F-D610-4F3E-AFCA-D4C0E48747B2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Business.Logic.Abstractions", "Sat.Recruitment.Business.Logic.Abstractions\Sat.Recruitment.Business.Logic.Abstractions.csproj", "{C264995F-D610-4F3E-AFCA-D4C0E48747B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Business.Logic.Implementations", "Sat.Recruitment.Business.Logic.Implementations\Sat.Recruitment.Business.Logic.Implementations.csproj", "{06612196-6EAA-4168-A465-414533D86384}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Business.Logic.Implementations", "Sat.Recruitment.Business.Logic.Implementations\Sat.Recruitment.Business.Logic.Implementations.csproj", "{06612196-6EAA-4168-A465-414533D86384}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Services.Abstractions", "Sat.Recruitment.Services.Abstractions\Sat.Recruitment.Services.Abstractions.csproj", "{4CA34C38-1228-47FF-941C-A49CCF14F25D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Services.Abstractions", "Sat.Recruitment.Services.Abstractions\Sat.Recruitment.Services.Abstractions.csproj", "{4CA34C38-1228-47FF-941C-A49CCF14F25D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.Services.Implementations", "Sat.Recruitment.Services.Implementations\Sat.Recruitment.Services.Implementations.csproj", "{E77BAF3F-6BCA-424D-BDB1-94FBE0EE1105}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sat.Recruitment.Services.Implementations", "Sat.Recruitment.Services.Implementations\Sat.Recruitment.Services.Implementations.csproj", "{E77BAF3F-6BCA-424D-BDB1-94FBE0EE1105}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.ResourceAccess.Responses", "Sat.Recruitment.ResourceAccess.Responses\Sat.Recruitment.ResourceAccess.Responses.csproj", "{F51E9A6C-12DF-453B-B4ED-042C3F55D9DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.ResourceAccess.FileManager", "Sat.Recruitment.ResourceAccess.FileManager\Sat.Recruitment.ResourceAccess.FileManager.csproj", "{49996359-8004-46E4-B92A-ED4B8008907E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sat.Recruitment.ResourceAccess.Entities", "Sat.Recruitment.ResourceAccess.Entities\Sat.Recruitment.ResourceAccess.Entities.csproj", "{0D74A89D-7AC2-4BC0-879F-64BFF38330F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +51,18 @@ Global
 		{E77BAF3F-6BCA-424D-BDB1-94FBE0EE1105}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E77BAF3F-6BCA-424D-BDB1-94FBE0EE1105}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E77BAF3F-6BCA-424D-BDB1-94FBE0EE1105}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F51E9A6C-12DF-453B-B4ED-042C3F55D9DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F51E9A6C-12DF-453B-B4ED-042C3F55D9DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F51E9A6C-12DF-453B-B4ED-042C3F55D9DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F51E9A6C-12DF-453B-B4ED-042C3F55D9DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{49996359-8004-46E4-B92A-ED4B8008907E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49996359-8004-46E4-B92A-ED4B8008907E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49996359-8004-46E4-B92A-ED4B8008907E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49996359-8004-46E4-B92A-ED4B8008907E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D74A89D-7AC2-4BC0-879F-64BFF38330F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D74A89D-7AC2-4BC0-879F-64BFF38330F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D74A89D-7AC2-4BC0-879F-64BFF38330F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D74A89D-7AC2-4BC0-879F-64BFF38330F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

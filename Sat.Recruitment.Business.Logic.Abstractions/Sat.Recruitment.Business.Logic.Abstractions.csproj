@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sat.Recruitment.ResourceAccess.Entities\Sat.Recruitment.ResourceAccess.Entities.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.ResourceAccess.Responses\Sat.Recruitment.ResourceAccess.Responses.csproj" />
+  </ItemGroup>
+
 </Project>

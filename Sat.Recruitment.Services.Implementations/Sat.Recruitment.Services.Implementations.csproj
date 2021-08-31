@@ -4,4 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Sat.Recruitment.Business.Logic.Abstractions\Sat.Recruitment.Business.Logic.Abstractions.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.Business.Logic.Implementations\Sat.Recruitment.Business.Logic.Implementations.csproj" />
+    <ProjectReference Include="..\Sat.Recruitment.Services.Abstractions\Sat.Recruitment.Services.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

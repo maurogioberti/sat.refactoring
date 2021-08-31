@@ -5,7 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-
+using Sat.Recruitment.Services.Abstractions;
+using Sat.Recruitment.Services.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,9 @@ namespace Sat.Recruitment.Api
         {
             services.AddControllers();
             services.AddSwaggerGen();
+
+            services.AddScoped<IUserService, UserService>();
+            //TODO: A real implementation for a UserService must be singleton, but adjust to the scope
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
