@@ -5,6 +5,7 @@ using Sat.Recruitment.ResourceAccess.Responses;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Text;
 
 namespace Sat.Recruitment.Business.Logic.Implementations
 {
@@ -35,24 +36,17 @@ namespace Sat.Recruitment.Business.Logic.Implementations
         }
         public ValidationResponse CreateUser(User user)
         {
-            string message = "";
-            
-            ValidateErrors(user.Name, user.Email, user.Address, user.Phone, ref message);
-
-            if (!string.IsNullOrEmpty(message))
-                return new ValidationResponse(false, string.Empty);
+            if (HasValidationErrors(user.Name, user.Email, user.Address, user.Phone, out string message))
+                return new ValidationResponse(false, message);
 
             IUserGiftCalculator userGiftCalculator = GiftCalculatorFactory(user);
             user.Money = userGiftCalculator.Calculate(user.Money);
 
             ReadUsersList(user);
 
-            if (IsUserDuplicated(user))
-            {
-                return new ValidationResponse(false, User.Validations.UserDuplicated);
-            }
-
-            return new ValidationResponse(true, User.Validations.UserCreated);
+            return IsUserDuplicated(user)
+                ? new ValidationResponse(false, User.Validations.UserDuplicated)
+                : new ValidationResponse(true, User.Validations.UserCreated);
         }
 
         private bool IsUserDuplicated(User user)
@@ -129,20 +123,22 @@ namespace Sat.Recruitment.Business.Logic.Implementations
         }
 
         //Validate errors
-        private void ValidateErrors(string name, string email, string address, string phone, ref string errors)
+        private bool HasValidationErrors(string name, string email, string address, string phone, out string errors)
         {
+            StringBuilder validationErrors = new StringBuilder();
+
             if (name == null)
-                //Validate if Name is null
-                errors = "The name is required";
+                validationErrors.Append(string.Format(User.Validations.NullValueFieldMask, "name"));
             if (email == null)
-                //Validate if Email is null
-                errors = errors + " The email is required";
+                validationErrors.Append(string.Format(User.Validations.NullValueFieldMask, "email"));
             if (address == null)
-                //Validate if Address is null
-                errors = errors + " The address is required";
+                validationErrors.Append(string.Format(User.Validations.NullValueFieldMask, "address"));
             if (phone == null)
-                //Validate if Phone is null
-                errors = errors + " The phone is required";
+                validationErrors.Append(string.Format(User.Validations.NullValueFieldMask, "phone"));
+
+            errors = validationErrors.ToString();
+
+            return validationErrors.Length > 0;
         }
     }
 }
