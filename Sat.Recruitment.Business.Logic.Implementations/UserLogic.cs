@@ -11,7 +11,7 @@ namespace Sat.Recruitment.Business.Logic.Implementations
 {
     public class UserLogic : IUserLogic
     {
-        private readonly List<User> _users = new List<User>();
+        private readonly List<User> _usersCreatedList = new List<User>();
 
         private IFileManager _fileManager;
 
@@ -19,6 +19,10 @@ namespace Sat.Recruitment.Business.Logic.Implementations
         {
         }
 
+        /// <summary>
+        /// Only for Unit Test Porpouses, FileManager must by mocked
+        /// </summary>
+        /// <param name="fileManager"></param>
         public UserLogic(IFileManager fileManager)
         {
             _fileManager = fileManager;
@@ -51,19 +55,12 @@ namespace Sat.Recruitment.Business.Logic.Implementations
 
         private bool IsUserDuplicated(User user)
         {
-            try
+            foreach (var u in _usersCreatedList)
             {
-                foreach (var u in _users)
+                if ((u.Name == user.Name && u.Address == user.Address) || u.Email == user.Email || u.Phone == user.Phone)
                 {
-                    if ((u.Name == user.Name && u.Address == user.Address) || u.Email == user.Email || u.Phone == user.Phone)
-                    {
-                        return true;
-                    }
+                    return true;
                 }
-            }
-            catch
-            {
-                return false;
             }
 
             return false;
@@ -73,31 +70,46 @@ namespace Sat.Recruitment.Business.Logic.Implementations
         {
             var reader = FileManager.ReadFile("/Files/Users.txt");
 
-            //Normalize email
-            var aux = user.Email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+            user.Email = NormalizeEmail(user.Email);
+
+            while (reader.Peek() >= 0)
+            {
+                string line = reader.ReadLineAsync().Result;
+                if (line != null)
+                {
+                    User userReaded = MappedUserFromFile(line);
+                    _usersCreatedList.Add(userReaded);
+                }
+            }
+
+            reader.Close();
+        }
+
+        private static User MappedUserFromFile(string? line)
+        {
+            User userReaded = new User
+            {
+                Name = line.Split(',')[0],
+                Email = line.Split(',')[1],
+                Phone = line.Split(',')[2],
+                Address = line.Split(',')[3],
+                UserType = line.Split(',')[4],
+                Money = decimal.Parse(line.Split(',')[5]),
+            };
+            return userReaded;
+        }
+
+        private string NormalizeEmail(string email)
+        {
+            var aux = email.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
 
             var atIndex = aux[0].IndexOf("+", StringComparison.Ordinal);
 
             aux[0] = atIndex < 0 ? aux[0].Replace(".", "") : aux[0].Replace(".", "").Remove(atIndex);
 
-            user.Email = string.Join("@", new string[] { aux[0], aux[1] });
+            email = string.Join("@", new string[] { aux[0], aux[1] });
 
-            while (reader.Peek() >= 0)
-            {
-                var line = reader.ReadLineAsync().Result;
-                User userReaded = new User
-                {
-                    Name = line.Split(',')[0].ToString(),
-                    Email = line.Split(',')[1].ToString(),
-                    Phone = line.Split(',')[2].ToString(),
-                    Address = line.Split(',')[3].ToString(),
-                    UserType = line.Split(',')[4].ToString(),
-                    Money = decimal.Parse(line.Split(',')[5].ToString()),
-                };
-                _users.Add(userReaded);
-            }
-
-            reader.Close();
+            return email;
         }
 
         private IUserGiftCalculator GiftCalculatorFactory(User user)
@@ -122,7 +134,6 @@ namespace Sat.Recruitment.Business.Logic.Implementations
             return userGiftCalculator;
         }
 
-        //Validate errors
         private bool HasValidationErrors(string name, string email, string address, string phone, out string errors)
         {
             StringBuilder validationErrors = new StringBuilder();
