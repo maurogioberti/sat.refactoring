@@ -42,7 +42,9 @@ namespace Sat.Recruitment.Business.Logic.Implementations
             if (!string.IsNullOrEmpty(message))
                 return new ValidationResponse(false, string.Empty);
 
-            CalculateMoneyByUserType(user);
+            IUserGiftCalculator userGiftCalculator = GiftCalculatorFactory(user);
+            user.Money = userGiftCalculator.Calculate(user.Money);
+
             ReadUsersList(user);
 
             if (IsUserDuplicated(user))
@@ -104,54 +106,26 @@ namespace Sat.Recruitment.Business.Logic.Implementations
             reader.Close();
         }
 
-        private static void CalculateMoneyByUserType(User user)
+        private IUserGiftCalculator GiftCalculatorFactory(User user)
         {
-            switch (user.UserType)
+            IUserGiftCalculator userGiftCalculator = null;
+
+            if(user.UserType == UserType.Normal)
             {
-                case "Normal":
-                {
-                    if (user.Money > 100)
-                    {
-                        var percentage = Convert.ToDecimal(0.12);
-                        //If new user is normal and has more than USD100
-                        var gif = user.Money * percentage;
-                        user.Money = user.Money + gif;
-                    }
-
-                    if (user.Money < 100)
-                    {
-                        if (user.Money > 10)
-                        {
-                            var percentage = Convert.ToDecimal(0.8);
-                            var gif = user.Money * percentage;
-                            user.Money = user.Money + gif;
-                        }
-                    }
-
-                    break;
-                }
-                case "SuperUser":
-                {
-                    if (user.Money > 100)
-                    {
-                        var percentage = Convert.ToDecimal(0.20);
-                        var gif = user.Money * percentage;
-                        user.Money = user.Money + gif;
-                    }
-
-                    break;
-                }
-                case "Premium":
-                {
-                    if (user.Money > 100)
-                    {
-                        var gif = user.Money * 2;
-                        user.Money = user.Money + gif;
-                    }
-
-                    break;
-                }
+                userGiftCalculator = new NormalUserGiftCalculator();
             }
+
+            if (user.UserType == UserType.SuperUser)
+            {
+                userGiftCalculator = new SuperUserGiftCalculator();
+            }
+
+            if (user.UserType == UserType.Premium)
+            {
+                userGiftCalculator = new PremiumUserGiftCalculator();
+            }
+
+            return userGiftCalculator;
         }
 
         //Validate errors
