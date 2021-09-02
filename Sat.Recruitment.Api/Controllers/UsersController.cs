@@ -12,15 +12,10 @@ using Sat.Recruitment.Services.Abstractions;
 
 namespace Sat.Recruitment.Api.Controllers
 {
-    public class Result
-    {
-        public bool IsSuccess { get; set; }
-        public string Errors { get; set; }
-    }
 
     [ApiController]
     [Route("[controller]")]
-    public partial class UsersController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IUserService _userService;
 
